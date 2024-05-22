@@ -1,0 +1,5 @@
+aglorithm:
+    1.Two pointer ( left - right)
+    2.Binary search
+    3.Quick sort
+    4.Slide window
