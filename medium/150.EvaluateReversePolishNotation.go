@@ -1,46 +1,37 @@
-package main
-
-import (
-	"math"
-	"strconv"
-)
-
 func evalRPN(tokens []string) int {
-	stack := []int{}
+	stack := make([]int, 0)
 
-	for _, token := range tokens {
-		if len(stack) >= 2 && isOperatorDigit(token) {
-			oneVal := stack[len(stack)-1]
-			twoVal := stack[len(stack)-2]
-			stack = stack[:len(stack)-2]
-			ansVal := caculatorDigit(twoVal, oneVal, token)
-			stack = append(stack, ansVal)
+	for _, val := range tokens {
+		if IsPunct(val) && len(stack) > 1 {
+			n := len(stack) - 1
+			b := stack[n]
+			a := stack[n-1]
+			stack = stack[:n-1]
+			stack = append(stack, calcNum(a, b, val))
 		} else {
-			tokenVal, _ := strconv.Atoi(token)
-			stack = append(stack, tokenVal)
+			num, _ := strconv.Atoi(val)
+			stack = append(stack, num)
 		}
 	}
-	return stack[len(stack)-1]
+
+	return stack[0]
 }
 
-func isOperatorDigit(digit string) bool {
-	return digit == "+" || digit == "-" || digit == "*" || digit == "/"
+func IsPunct(o string) bool {
+	return o == "+" || o == "-" || o == "*" || o == "/"
 }
 
-func caculatorDigit(val1, val2 int, digit string) int {
-	var ans int
-	if digit == "+" {
-		ans = val1 + val2
-	}
-	if digit == "-" {
-		ans = val1 - val2
-	}
-	if digit == "*" {
-		ans = val1 * val2
-	}
-	if digit == "/" {
-		ans = val1 / val2
+func calcNum(a, b int, operation string) int {
+	switch operation {
+	case "*":
+		return a * b
+	case "-":
+		return a - b
+	case "+":
+		return a + b
+	case "/":
+		return a / b
 	}
 
-	return int(math.Round(float64(ans)))
+	return 0
 }
