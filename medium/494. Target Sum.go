@@ -1,9 +1,5 @@
 package main
 
-import (
-	"fmt"
-)
-
 func findTargetSumWays(nums []int, target int) int {
 	totalSum := 0
 
@@ -33,10 +29,4 @@ func abs(x int) int {
 		return -x
 	}
 	return x
-}
-
-func main() {
-	nums := []int{1, 1, 1, 1, 1}
-	target := 3
-	fmt.Println(findTargetSumWays(nums, target))
 }
